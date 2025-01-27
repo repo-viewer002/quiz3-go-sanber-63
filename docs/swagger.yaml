@@ -1,0 +1,541 @@
+definitions:
+  books.Book:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      created_by:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      modified_at:
+        type: string
+      modified_by:
+        type: string
+      price:
+        type: integer
+      release_year:
+        type: integer
+      thickness:
+        type: string
+      title:
+        type: string
+      total_page:
+        type: integer
+    type: object
+  categories.Category:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: integer
+      modified_at:
+        type: string
+      modified_by:
+        type: string
+      name:
+        type: string
+    type: object
+  responses.BaseResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  swagger.BookInput:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      image_url:
+        type: string
+      price:
+        type: integer
+      release_year:
+        type: integer
+      thickness:
+        type: string
+      title:
+        type: string
+      total_page:
+        type: integer
+    type: object
+  swagger.CategoryInput:
+    properties:
+      name:
+        type: string
+    type: object
+  swagger.UserInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  users.User:
+    properties:
+      created_at:
+        type: string
+      created_by:
+        type: string
+      id:
+        type: integer
+      modified_at:
+        type: string
+      modified_by:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/books:
+    get:
+      consumes:
+      - application/json
+      description: get all book
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get all book success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/books.Book'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Get all book
+      tags:
+      - Books
+    post:
+      consumes:
+      - application/json
+      description: Create new book
+      parameters:
+      - description: Category data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.BookInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: create book success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/books.Book'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Create book
+      tags:
+      - Books
+  /api/books/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Delete book by id
+      parameters:
+      - description: book id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: delete book by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/books.Book'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Delete book by id
+      tags:
+      - Books
+    get:
+      consumes:
+      - application/json
+      description: get book by ud
+      parameters:
+      - description: book id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get book by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/books.Book'
+                  type: array
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Get book by id
+      tags:
+      - Books
+    put:
+      consumes:
+      - application/json
+      description: Update book by id
+      parameters:
+      - description: book id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Category data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.CategoryInput'
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: update book by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/books.Book'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Update book by id
+      tags:
+      - Books
+  /api/categories:
+    get:
+      consumes:
+      - application/json
+      description: get all category
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get all category success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/categories.Category'
+                  type: array
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Get all category
+      tags:
+      - Categories
+    post:
+      consumes:
+      - application/json
+      description: Create new category
+      parameters:
+      - description: Category data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.CategoryInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: create category success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/categories.Category'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Create category
+      tags:
+      - Categories
+  /api/categories/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Delete category by id
+      parameters:
+      - description: category id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: delete category by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/categories.Category'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Delete category by id
+      tags:
+      - Categories
+    get:
+      consumes:
+      - application/json
+      description: get category by ud
+      parameters:
+      - description: category id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: get category by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/categories.Category'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Get category by id
+      tags:
+      - Categories
+    put:
+      consumes:
+      - application/json
+      description: Update category by id
+      parameters:
+      - description: category id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Category data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.CategoryInput'
+      - description: 'JWT access token (default: Bearer accessToken)'
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: update category by id success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/categories.Category'
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Update category by id
+      tags:
+      - Categories
+  /api/users:
+    post:
+      consumes:
+      - application/json
+      description: Creating a new user
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.UserInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: create user success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/users.User'
+              type: object
+        "400":
+          description: duplicated username
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Create user
+      tags:
+      - Users & Authentications
+  /api/users/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/swagger.UserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: login success
+          schema:
+            allOf:
+            - $ref: '#/definitions/responses.BaseResponse'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: bad request errors
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+        "401":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/responses.BaseResponse'
+      summary: Login
+      tags:
+      - Users & Authentications
+swagger: "2.0"
