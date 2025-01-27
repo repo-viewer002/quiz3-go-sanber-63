@@ -50,7 +50,7 @@ func indexController(ctx *gin.Context) {
 				<title>API Documentation</title>
 			</head>
 			<body>
-				<h1>Sanbercode Golang Backend Development | Quiz 3</h1>
+				<h1>Sanbercode Golang Backend Development Batch 63 | Quiz 3</h1>
 				<a href="`+apiDocumentation+`" target="_blank">API Documentation</a></br>
 				<a href="`+commons.REPOSITORY+`" target="_blank">Github Repository</a></br>
 				<a href="`+commons.ENDPOINT+`" target="_blank">Railway Deployment URL</a>
